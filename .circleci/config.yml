@@ -1,0 +1,26 @@
+version: 2
+jobs:
+  deploy:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/repo
+
+    steps:
+      - checkout
+      - run:
+          name: start build
+          command: |
+            npm install
+            npm install --save-dev firebase-tools
+            npm run build
+            ./node_modules/.bin/firebase use --add 【PJ NAME】
+            ./node_modules/.bin/firebase deploy --token="$FIREBASE_TOKEN"
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - deploy:
+          filters:
+            branches:
+              only: master
