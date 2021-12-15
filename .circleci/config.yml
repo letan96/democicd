@@ -144,7 +144,7 @@ workflows:
   build_deploy_stg:
     jobs:
       - build_deploy_stg:
-          context: monla-stg
+          context: app-stg
           filters:
             branches:
               only: develop
